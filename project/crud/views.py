@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import FormularioForm,Formulario
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -11,10 +12,14 @@ def index(request):
             idade = form.cleaned_data['idade']
             email = form.cleaned_data['email']
             telefone = form.cleaned_data['telefone']
-            print(nome,idade,email,telefone,sep = "\n")
+            
+           
             form.save()
             formularios = Formulario.objects.all()
             return render(request,'cadastros.html',{'formularios' : formularios})
+        
+        else:
+            return render(request, 'index.html', {'form': form})
 
     else:
         form = FormularioForm()
